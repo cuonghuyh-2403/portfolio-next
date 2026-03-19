@@ -1,0 +1,193 @@
+.hero {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ── Background Noise & Texture ── */
+.bgNoise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+}
+
+.gridLines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(184, 245, 60, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184, 245, 60, 0.05) 1px, transparent 1px);
+    background-size: 100px 100px;
+    background-position: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Maximalist Typography ── */
+.titleLayer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: clamp(1rem, 5vw, 4rem);
+    z-index: 20; /* Highest priority */
+    pointer-events: none;
+}
+
+.firstName {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 15vw, 15rem); /* Smaller font size */
+    font-weight: 900;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+    margin-left: 0;
+    z-index: 10;
+    mix-blend-mode: normal; /* Normal for better readability */
+    position: relative;
+}
+
+.lastName {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 14vw, 13rem); /* Smaller font size */
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-left: 2vw; /* Less offset */
+    z-index: 10;
+    position: relative;
+    mix-blend-mode: normal;
+}
+
+/* ── Overlapping Avatar (Anti-grid) ── */
+.avatarContainer {
+    position: absolute;
+    right: 5vw;
+    top: 32%; /* Significant lift from 42% */
+    transform: translateY(-50%) rotate(-3deg);
+    width: clamp(280px, 35vw, 550px);
+    aspect-ratio: 4 / 5;
+    z-index: 5; 
+    border: 3px solid var(--ink); /* Stronger border */
+    overflow: hidden;
+    filter: grayscale(100%) contrast(1.1);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 20px 20px 0 var(--accent); /* More prominent shadow */
+}
+
+.avatarContainer:hover {
+    filter: grayscale(0%) contrast(1.1);
+    transform: translateY(-50%) rotate(0deg) scale(1.02);
+    box-shadow: -25px 25px 0 rgba(184, 245, 60, 0.8);
+    z-index: 10;
+}
+
+.avatarImg {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transform: scale(1.05);
+}
+
+/* ── Absolute Positioning Chaos ── */
+.roleBadge {
+    position: absolute;
+    bottom: 12vh;
+    left: 8vw;
+    font-family: var(--mono);
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--ink);
+    padding: 1rem 2rem;
+    z-index: 5;
+    transform: rotate(-3deg);
+    border: 2px solid var(--accent);
+}
+
+.descBlock {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vw;
+    width: 300px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--accent);
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(5px);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--ink);
+    z-index: 6;
+}
+
+.verticalText {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%) rotate(-180deg);
+    writing-mode: vertical-rl;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--ink3);
+    text-transform: uppercase;
+}
+
+/* ── Floating Badge ── */
+.floatingBadge {
+    position: absolute;
+    top: 15vh;
+    right: 20vw;
+    width: 120px;
+    height: 120px;
+    z-index: 6;
+    animation: spin 10s linear infinite;
+    mix-blend-mode: difference;
+}
+
+.floatingBadge svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent);
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+    .firstName { font-size: 24vw; margin-left: 0; }
+    .lastName { font-size: 22vw; margin-left: 5vw; }
+    .avatarContainer { 
+        position: absolute; /* Revert to absolute for precise positioning */
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(2deg);
+        width: 80vw; 
+        aspect-ratio: 4 / 5; 
+        z-index: 1;
+        margin: 0;
+    }
+    .avatarImg {
+        transform: scale(1);
+    }
+    .roleBadge { position: relative; bottom: auto; top: auto; left: auto; margin-top: 2rem; align-self: center; }
+    .descBlock { position: relative; bottom: auto; right: auto; margin: 2rem auto; width: 90%; }
+}

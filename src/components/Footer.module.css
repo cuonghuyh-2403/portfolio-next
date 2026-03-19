@@ -1,0 +1,48 @@
+.footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    font-size: .72rem;
+    color: var(--ink3);
+    background: var(--bg);
+}
+
+.logo {
+    font-family: var(--mono);
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.logo em {
+    font-style: normal;
+    color: var(--accent);
+}
+
+.center {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .05em;
+}
+
+.mono {
+    font-family: var(--mono);
+    font-size: .65rem;
+    text-align: right;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .footer {
+        padding: 1.5rem 2rem;
+        grid-template-columns: 1fr;
+        gap: .6rem;
+        text-align: center;
+    }
+    .mono { text-align: center; }
+}

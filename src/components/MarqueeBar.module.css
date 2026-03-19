@@ -1,0 +1,66 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: transparent;
+    overflow: hidden;
+    margin-top: -100px; /* pull up into hero */
+    z-index: 10;
+    pointer-events: none;
+}
+
+.mq {
+    position: absolute;
+    width: 150vw;
+    left: -25vw;
+    background: var(--accent);
+    padding: 1.5rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transform-origin: center;
+    border-top: 5px solid var(--bg);
+    border-bottom: 5px solid var(--bg);
+}
+
+.mq1 {
+    top: 50px;
+    transform: rotate(-10deg);
+    background: var(--ink);
+    border-color: var(--accent);
+}
+
+.mq2 {
+    top: 150px;
+    transform: rotate(5deg);
+    background: var(--accent);
+}
+
+.inner {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+}
+
+.item {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    padding: 0 1rem;
+    font-style: italic;
+}
+
+.mq1 .item {
+    color: var(--bg);
+    -webkit-text-stroke: 1px var(--accent);
+}
+
+.sep {
+    display: inline-block;
+    margin-left: 1rem;
+    opacity: 0.8;
+    font-size: 0.8em;
+    font-family: var(--mono);
+}

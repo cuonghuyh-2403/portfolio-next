@@ -1,0 +1,117 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 6vw;
+    min-width: 60px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    background: var(--ink);
+    border-right: 2px solid var(--accent);
+    mix-blend-mode: exclusion;
+}
+
+.logo {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent);
+    text-decoration: none;
+    transform: rotate(-90deg);
+    margin-top: 2rem; /* Back to top */
+}
+
+.adminLink {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    padding: 10px 15px; /* Keep hit area fix */
+    cursor: pointer;
+    margin-left: -5px;
+    transition: all 0.2s;
+}
+
+.adminLink:hover {
+    color: var(--bg);
+    transform: scale(1.5);
+}
+
+.ul {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    list-style: none;
+    margin-top: 2rem; /* Revert centering */
+    margin-bottom: auto;
+}
+
+.ul a {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--bg);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transition: color 0.3s;
+}
+
+.ul a:hover {
+    color: var(--accent);
+}
+
+.btn {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 2rem 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background: var(--bg);
+    color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .nav {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 60px;
+        min-width: 0;
+        flex-direction: row;
+        border-right: none;
+        border-top: 2px solid var(--accent);
+        padding: 0 1rem;
+    }
+    .logo, .ul a, .btn {
+        writing-mode: horizontal-tb;
+        transform: none;
+        margin: 0;
+        padding: 0;
+    }
+    .ul {
+        flex-direction: row;
+        gap: 1rem;
+        margin: 0;
+    }
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+}

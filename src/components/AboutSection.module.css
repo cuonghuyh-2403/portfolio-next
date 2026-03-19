@@ -1,0 +1,177 @@
+.aboutSec {
+    min-height: 120vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg2);
+    padding: 15vh 5vw;
+}
+
+/* ── Giant Background Typography ── */
+.bgType {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    font-family: var(--serif);
+    font-size: clamp(6rem, 25vw, 30rem);
+    font-weight: 900;
+    color: var(--bg);
+    opacity: 0.8;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+    line-height: 0.8;
+}
+
+/* ── Flow Chaos Container ── */
+.antiGrid {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    z-index: 2;
+}
+
+/* Row 1: Bio & Status */
+.row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.bioBlock {
+    width: clamp(300px, 45vw, 600px);
+    background: var(--accent);
+    color: var(--bg);
+    padding: 3rem;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    transform: rotate(-2deg);
+    border: 3px solid var(--ink);
+    box-shadow: 15px 15px 0 var(--ink);
+    z-index: 3;
+    transition: transform 0.3s ease;
+    margin-top: 5vh;
+}
+
+.bioBlock:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.bioBlock p {
+    margin-bottom: 1.5rem;
+}
+.bioBlock p:last-child {
+    margin-bottom: 0;
+}
+
+.statusBlock {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--accent);
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin-right: 5vw;
+}
+
+/* Row 2: Info & Experience */
+.row2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    flex-wrap: wrap-reverse;
+    gap: 4rem;
+    margin-top: -10vh; /* Deliberate overlap */
+}
+
+.infoBlock {
+    background: var(--bg);
+    padding: 2.5rem;
+    border: 3px solid var(--accent);
+    font-family: var(--mono);
+    color: var(--ink);
+    transform: rotate(4deg);
+    z-index: 4;
+    min-width: 300px;
+}
+
+.infoItem {
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+.infoItem:last-child {
+    margin-bottom: 0;
+}
+.infoLbl {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.3rem;
+}
+.infoVal {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.expBlock {
+    width: clamp(320px, 40vw, 550px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 4rem 3rem;
+    z-index: 5;
+    transform: rotate(-1deg);
+    border: 1px solid var(--border);
+}
+
+.expItem {
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+}
+.expItem:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.expYear {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.expTitle {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--bg);
+}
+
+.expCompany {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 900px) {
+    .row1, .row2 { flex-direction: column; align-items: center; gap: 3rem; margin-top: 0; }
+    .bioBlock, .infoBlock, .expBlock { width: 100%; transform: none; box-shadow: none; margin: 0; }
+    .statusBlock { writing-mode: horizontal-tb; transform: none; margin: 0; }
+    .bgType { opacity: 0.3; }
+}

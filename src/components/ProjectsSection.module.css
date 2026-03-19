@@ -1,0 +1,122 @@
+.projSec {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 15vh 5vw;
+    position: relative;
+    border-top: 5px solid var(--accent);
+}
+
+.giantTitle {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 15vw, 15rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--accent);
+    line-height: 0.8;
+    margin-bottom: 5vh;
+    mix-blend-mode: exclusion;
+    white-space: nowrap;
+}
+
+.projList {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    position: relative;
+    z-index: 2;
+}
+
+.projCard {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2rem;
+    transition: transform 0.4s ease;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><circle cx="15" cy="15" r="10" fill="%23B8F53C"/></svg>') 15 15, auto;
+}
+
+.projCard:hover {
+    transform: translateX(20px);
+}
+
+.projNum {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.projTitle {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--bg);
+    flex-grow: 1;
+    margin: 0 4rem;
+    transition: color 0.3s;
+}
+
+.projCard:hover .projTitle {
+    color: var(--accent);
+    -webkit-text-stroke: 1px var(--bg);
+}
+
+.projMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.projCat {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--bg);
+    border-radius: 50px;
+}
+
+.projYear {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.hoverImg {
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%) scale(0.5) rotate(5deg);
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 10;
+    box-shadow: 15px 15px 0 var(--accent);
+    filter: grayscale(100%) contrast(150%);
+}
+
+.projCard:hover .hoverImg {
+    opacity: 1;
+    transform: translateY(-50%) scale(1) rotate(-2deg);
+    filter: grayscale(0%) contrast(120%);
+}
+
+@media (max-width: 900px) {
+    .projCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .projTitle { margin: 1rem 0; font-size: 3rem; }
+    .projMeta { align-items: flex-start; }
+    .hoverImg { display: none; }
+}
