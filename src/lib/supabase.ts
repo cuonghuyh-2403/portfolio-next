@@ -4,12 +4,8 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || '';
 
-// Client for the browser (public) — use PKCE flow for server-side code exchange
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-        flowType: 'pkce',
-    },
-});
+// Client for the browser (public)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Server-only client with service_role key — full read/write access.
 // We only want to initialize this in the Node.js environment to prevent Next.js client-side crashes, 

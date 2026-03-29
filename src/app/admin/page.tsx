@@ -29,20 +29,18 @@ function AdminLoginContent() {
             return;
         }
 
-        // PKCE flow: Supabase redirects back with ?code=... 
-        // The browser exchanges the code using the code_verifier stored in localStorage
-        const code = searchParams.get('code');
-        if (code) {
+        // Implicit flow: Supabase redirects back with #access_token in hash
+        // The Supabase JS client auto-detects the hash and establishes a session
+        if (window.location.hash.includes('access_token')) {
             setLoading(true);
-            supabase.auth.exchangeCodeForSession(code).then(({ data, error: exchangeError }) => {
-                if (exchangeError || !data.session) {
+            supabase.auth.getSession().then(({ data, error: sessionError }) => {
+                if (sessionError || !data.session) {
                     setError('Phiên đăng nhập không hợp lệ hoặc đã hết hạn.');
                     setLoading(false);
                     return;
                 }
 
-                // Successfully exchanged code for session
-                // Now call our server API to set the admin session cookie
+                // Session established — call our API to set admin cookie
                 fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
