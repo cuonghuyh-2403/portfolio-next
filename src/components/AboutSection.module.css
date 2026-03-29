@@ -1,177 +1,222 @@
 .aboutSec {
-    min-height: 120vh;
     position: relative;
-    overflow: hidden;
     background: var(--bg2);
-    padding: 15vh 5vw;
+    padding: 8rem 4rem;
 }
 
-/* ── Giant Background Typography ── */
-.bgType {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-5deg);
-    font-family: var(--serif);
-    font-size: clamp(6rem, 25vw, 30rem);
-    font-weight: 900;
-    color: var(--bg);
-    opacity: 0.8;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
-    white-space: nowrap;
-    z-index: 0;
-    pointer-events: none;
-    line-height: 0.8;
-}
-
-/* ── Flow Chaos Container ── */
-.antiGrid {
-    position: relative;
-    width: 100%;
-    max-width: 1400px;
+.container {
+    max-width: 1100px;
     margin: 0 auto;
+}
+
+/* ── Section Tag ── */
+.sectionTag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sectionTag::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+}
+
+/* ── Two Column Grid ── */
+.editorialGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Bio Column ── */
+.heading {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 2.5rem;
+    color: var(--ink);
+}
+
+.heading em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.bioText {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--ink2);
+    columns: 1;
+}
+
+.bioText p {
+    margin-bottom: 1.5rem;
+}
+
+.bioText p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Info Column ── */
+.infoCol {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
-    z-index: 2;
+    gap: 2.5rem;
 }
 
-/* Row 1: Bio & Status */
-.row1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.bioBlock {
-    width: clamp(300px, 45vw, 600px);
-    background: var(--accent);
-    color: var(--bg);
-    padding: 3rem;
-    font-family: var(--serif);
-    font-size: 1.2rem;
-    line-height: 1.6;
-    transform: rotate(-2deg);
-    border: 3px solid var(--ink);
-    box-shadow: 15px 15px 0 var(--ink);
-    z-index: 3;
-    transition: transform 0.3s ease;
-    margin-top: 5vh;
-}
-
-.bioBlock:hover {
-    transform: rotate(0deg) scale(1.02);
-}
-
-.bioBlock p {
-    margin-bottom: 1.5rem;
-}
-.bioBlock p:last-child {
-    margin-bottom: 0;
-}
-
-.statusBlock {
+.statusBadge {
     font-family: var(--mono);
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 900;
-    color: var(--accent);
-    text-transform: uppercase;
-    mix-blend-mode: difference;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    margin-right: 5vw;
-}
-
-/* Row 2: Info & Experience */
-.row2 {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    flex-wrap: wrap-reverse;
-    gap: 4rem;
-    margin-top: -10vh; /* Deliberate overlap */
-}
-
-.infoBlock {
-    background: var(--bg);
-    padding: 2.5rem;
-    border: 3px solid var(--accent);
-    font-family: var(--mono);
-    color: var(--ink);
-    transform: rotate(4deg);
-    z-index: 4;
-    min-width: 300px;
-}
-
-.infoItem {
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-}
-.infoItem:last-child {
-    margin-bottom: 0;
-}
-.infoLbl {
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    margin-bottom: 0.3rem;
-}
-.infoVal {
+    font-size: 0.75rem;
     font-weight: 700;
-    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #fff;
+    background: var(--accent);
+    padding: 0.8rem 1.5rem;
+    display: inline-block;
+    align-self: flex-start;
 }
 
-.expBlock {
-    width: clamp(320px, 40vw, 550px);
-    background: var(--ink);
-    color: var(--bg);
-    padding: 4rem 3rem;
-    z-index: 5;
-    transform: rotate(-1deg);
-    border: 1px solid var(--border);
+.infoTable {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.infoRow {
+    display: flex;
+    align-items: baseline;
+    padding: 1.2rem 0;
+    border-bottom: 1px dotted var(--ink3);
+}
+
+.infoLabel {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink3);
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.infoDots {
+    flex: 1;
+    border-bottom: 1px dotted var(--ink3);
+    margin: 0 1rem;
+    opacity: 0.3;
+    min-width: 20px;
+    align-self: center;
+    height: 0;
+}
+
+.infoValue {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+/* ── Experience Section ── */
+.expSection {
+    margin-top: 0;
+}
+
+.expHeader {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--ink);
+    display: inline-block;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .expItem {
-    margin-bottom: 2.5rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
 }
-.expItem:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-    padding-bottom: 0;
+
+.expItem:hover {
+    background: rgba(230, 57, 70, 0.03);
 }
 
 .expYear {
     font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 900;
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--accent);
-    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    padding-top: 0.2rem;
+}
+
+.expContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
 }
 
 .expTitle {
-    font-size: 1.4rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--bg);
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
 }
 
 .expCompany {
     font-family: var(--mono);
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    color: var(--ink2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
+.expDesc {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--ink2);
+    margin-top: 0.5rem;
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
-    .row1, .row2 { flex-direction: column; align-items: center; gap: 3rem; margin-top: 0; }
-    .bioBlock, .infoBlock, .expBlock { width: 100%; transform: none; box-shadow: none; margin: 0; }
-    .statusBlock { writing-mode: horizontal-tb; transform: none; margin: 0; }
-    .bgType { opacity: 0.3; }
+    .aboutSec {
+        padding: 5rem 2rem;
+    }
+    .editorialGrid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .expItem {
+        grid-template-columns: 80px 1fr;
+        gap: 1rem;
+    }
 }

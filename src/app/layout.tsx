@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Inter, Space_Mono } from 'next/font/google';
+import { Playfair_Display, Inter, Space_Mono, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -7,6 +7,14 @@ const playfair = Playfair_Display({
   weight: ['700', '900'],
   style: ['normal', 'italic'],
   variable: '--font-playfair',
+  display: 'swap',
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 });
 
@@ -45,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${playfair.variable} ${inter.variable} ${spaceMono.variable}`}
+      className={`${playfair.variable} ${cormorant.variable} ${inter.variable} ${spaceMono.variable}`}
     >
       <body>
         <SmoothScroll>

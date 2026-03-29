@@ -1,37 +1,29 @@
 .container {
     position: relative;
     width: 100%;
-    height: 300px;
-    background: transparent;
     overflow: hidden;
-    margin-top: -100px; /* pull up into hero */
     z-index: 10;
     pointer-events: none;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 .mq {
-    position: absolute;
     width: 150vw;
     left: -25vw;
-    background: var(--accent);
-    padding: 1.5rem 0;
+    position: relative;
+    background: var(--ink);
+    padding: 1.2rem 0;
     overflow: hidden;
     white-space: nowrap;
-    transform-origin: center;
-    border-top: 5px solid var(--bg);
-    border-bottom: 5px solid var(--bg);
 }
 
 .mq1 {
-    top: 50px;
-    transform: rotate(-10deg);
     background: var(--ink);
-    border-color: var(--accent);
+    border-bottom: 1px solid rgba(245, 240, 235, 0.1);
 }
 
 .mq2 {
-    top: 150px;
-    transform: rotate(5deg);
     background: var(--accent);
 }
 
@@ -43,24 +35,25 @@
 
 .item {
     font-family: var(--serif);
-    font-size: 2.5rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--bg);
     padding: 0 1rem;
     font-style: italic;
 }
 
-.mq1 .item {
-    color: var(--bg);
-    -webkit-text-stroke: 1px var(--accent);
+.mq2 .item {
+    color: #fff;
+    font-style: normal;
+    font-weight: 700;
 }
 
 .sep {
     display: inline-block;
     margin-left: 1rem;
-    opacity: 0.8;
+    opacity: 0.4;
     font-size: 0.8em;
-    font-family: var(--mono);
+    font-family: var(--sans);
 }

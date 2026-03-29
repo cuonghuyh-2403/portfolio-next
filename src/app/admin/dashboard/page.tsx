@@ -4,7 +4,16 @@ import { useRouter } from 'next/navigation';
 import type { Content } from '@/lib/content';
 import s from './Dashboard.module.css';
 
-type Tab = 'hero' | 'about' | 'skills' | 'projects' | 'contact' | 'settings';
+type Tab = 'hero' | 'about' | 'skills' | 'projects' | 'contact' | 'inbox' | 'settings';
+
+type ContactMessage = {
+    id: string;
+    name: string;
+    email: string;
+    message: string;
+    read: boolean;
+    created_at: string;
+};
 
 export default function DashboardPage() {
     const [content, setContent] = useState<Content | null>(null);
@@ -43,6 +52,7 @@ export default function DashboardPage() {
         { id: 'skills', label: <><svg className={s.navIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Skills</> },
         { id: 'projects', label: <><svg className={s.navIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>Projects</> },
         { id: 'contact', label: <><svg className={s.navIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Contact</> },
+        { id: 'inbox', label: <><svg className={s.navIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>Inbox</> },
         { id: 'settings', label: <><svg className={s.navIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Cài đặt</> },
     ];
 
@@ -106,6 +116,7 @@ export default function DashboardPage() {
                     {tab === 'skills' && <SkillsTab content={content} setContent={setContent} />}
                     {tab === 'projects' && <ProjectsTab content={content} setContent={setContent} />}
                     {tab === 'contact' && <ContactTab content={content} setContent={setContent} />}
+                    {tab === 'inbox' && <InboxTab />}
                     {tab === 'settings' && <SettingsTab />}
                 </div>
             </main>
@@ -215,7 +226,7 @@ function AvatarUpload({ avatarUrl, setAvatarUrl }: { avatarUrl?: string, setAvat
                     style={{ padding: '1rem', border: '1.5px dashed var(--border)', borderRadius: 3, textAlign: 'center', cursor: 'pointer', color: 'var(--muted)', fontSize: '.8rem', transition: 'border-color .2s' }}
                 >
                     📂 Kéo thả ảnh vào đây hoặc <span style={{ color: '#e74c3c', textDecoration: 'underline' }}>chọn file</span>
-                    <div style={{ fontSize: '.7rem', marginTop: '.3rem', opacity: .6 }}>JPG · PNG · WebP · GIF · Tối đa 5MB</div>
+                    <div style={{ fontSize: '.7rem', marginTop: '.3rem', opacity: .6 }}>JPG · PNG · WebP · GIF · Tối đa 10MB</div>
                 </div>
                 <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: 'none' }} />
 
@@ -505,5 +516,128 @@ function SettingsTab() {
                 </button>
             </form>
         </Card>
+    );
+}
+
+function InboxTab() {
+    const [contacts, setContacts] = useState<ContactMessage[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+    const loadContacts = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/contacts');
+            if (res.ok) {
+                setContacts(await res.json());
+            }
+        } catch (err) {
+            console.error('Failed to load contacts:', err);
+        }
+        setLoading(false);
+    }, []);
+
+    useEffect(() => { loadContacts(); }, [loadContacts]);
+
+    const toggleRead = async (id: string, read: boolean) => {
+        setActionLoading(id);
+        await fetch('/api/contacts', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, read }),
+        });
+        setContacts(prev => prev.map(c => c.id === id ? { ...c, read } : c));
+        setActionLoading(null);
+    };
+
+    const deleteContact = async (id: string) => {
+        if (!confirm('Xoá tin nhắn này?')) return;
+        setActionLoading(id);
+        await fetch('/api/contacts', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }),
+        });
+        setContacts(prev => prev.filter(c => c.id !== id));
+        setActionLoading(null);
+    };
+
+    const timeAgo = (dateStr: string) => {
+        const diff = Date.now() - new Date(dateStr).getTime();
+        const mins = Math.floor(diff / 60000);
+        if (mins < 1) return 'Vừa xong';
+        if (mins < 60) return `${mins} phút trước`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours} giờ trước`;
+        const days = Math.floor(hours / 24);
+        return `${days} ngày trước`;
+    };
+
+    const unreadCount = contacts.filter(c => !c.read).length;
+
+    if (loading) return <div style={{ color: '#7a7e96', textAlign: 'center', padding: '3rem' }}>Đang tải tin nhắn...</div>;
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* Summary bar */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '.8rem', color: '#7a7e96' }}>
+                    {contacts.length} tin nhắn · <span style={{ color: unreadCount > 0 ? '#e74c3c' : '#27ae60' }}>{unreadCount} chưa đọc</span>
+                </span>
+                <button onClick={loadContacts} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.1)', color: '#7a7e96', padding: '.4rem .8rem', borderRadius: '6px', cursor: 'pointer', fontSize: '.75rem', fontFamily: 'var(--mono)' }}>↻ Làm mới</button>
+            </div>
+
+            {contacts.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '4rem', color: '#7a7e96', fontFamily: 'Inter, sans-serif' }}>
+                    <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3 }}>📭</div>
+                    <p>Chưa có tin nhắn nào.</p>
+                </div>
+            ) : (
+                contacts.map(c => (
+                    <div key={c.id} style={{
+                        padding: '1.5rem',
+                        background: c.read ? 'rgba(255,255,255,0.02)' : 'rgba(231,76,60,0.05)',
+                        border: `1px solid ${c.read ? 'rgba(255,255,255,0.06)' : 'rgba(231,76,60,0.15)'}`,
+                        borderRadius: '12px',
+                        borderLeft: c.read ? undefined : '3px solid #e74c3c',
+                        position: 'relative',
+                        transition: 'all 0.2s'
+                    }}>
+                        {/* Header */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                            <div>
+                                <div style={{ fontWeight: 700, color: '#fff', fontSize: '1rem', marginBottom: '.2rem' }}>
+                                    {!c.read && <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#e74c3c', marginRight: '.5rem' }} />}
+                                    {c.name}
+                                </div>
+                                <a href={`mailto:${c.email}`} style={{ color: '#7a7e96', fontSize: '.85rem', textDecoration: 'none' }}>{c.email}</a>
+                            </div>
+                            <span style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', color: '#555', whiteSpace: 'nowrap' }}>{timeAgo(c.created_at)}</span>
+                        </div>
+
+                        {/* Message */}
+                        <p style={{ color: '#c0c0c0', lineHeight: 1.6, fontSize: '.9rem', marginBottom: '1rem', whiteSpace: 'pre-wrap' }}>{c.message}</p>
+
+                        {/* Actions */}
+                        <div style={{ display: 'flex', gap: '.5rem' }}>
+                            <button
+                                onClick={() => toggleRead(c.id, !c.read)}
+                                disabled={actionLoading === c.id}
+                                style={{ padding: '.4rem .8rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: '#7a7e96', cursor: 'pointer', fontSize: '.75rem', fontFamily: 'var(--mono)', transition: 'all 0.2s' }}
+                            >
+                                {c.read ? '📩 Đánh dấu chưa đọc' : '✓ Đánh dấu đã đọc'}
+                            </button>
+                            <button
+                                onClick={() => deleteContact(c.id)}
+                                disabled={actionLoading === c.id}
+                                style={{ padding: '.4rem .8rem', background: 'rgba(192,57,43,0.1)', border: '1px solid rgba(192,57,43,0.2)', borderRadius: '6px', color: '#e74c3c', cursor: 'pointer', fontSize: '.75rem', fontFamily: 'var(--mono)', transition: 'all 0.2s' }}
+                            >
+                                ✕ Xoá
+                            </button>
+                        </div>
+                    </div>
+                ))
+            )}
+        </div>
     );
 }

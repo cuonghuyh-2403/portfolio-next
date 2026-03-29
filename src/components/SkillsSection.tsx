@@ -7,33 +7,59 @@ import styles from './SkillsSection.module.css';
 type Props = { data: Content['skills'] };
 
 export default function SkillsSection({ data }: Props) {
-    const ref = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-    
-    // Slanted overall scroll effect
-    const yParallax = useTransform(scrollYProgress, [0, 1], [150, -150]);
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+
+    const headingY = useTransform(scrollYProgress, [0, 0.4], [60, 0]);
+    const headingOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
 
     return (
-        <section id="skills" className={styles.skillsSec} ref={ref}>
-            <div className="tag" style={{ marginLeft: '5vw' }}>02 / EXPERTISE</div>
-            
-            <motion.div className={styles.giantList} style={{ y: yParallax }}>
-                {data.map((sk, i) => (
-                    <motion.div 
-                        key={sk.name} 
-                        className={styles.skillRow}
-                        initial={{ opacity: 0, scale: 0.8, rotate: i % 2 === 0 ? -5 : 5 }}
-                        whileInView={{ opacity: 1, scale: 1, rotate: i % 2 === 0 ? -2 : 2 }}
-                        viewport={{ once: true, amount: 0.4 }}
-                        transition={{ type: 'spring', stiffness: 50, damping: 20 }}
-                    >
-                        <h3 className={styles.skillName}>{sk.name}</h3>
-                        <div className={styles.hoverDetails}>
-                            {sk.list.toUpperCase()}
-                        </div>
-                    </motion.div>
-                ))}
-            </motion.div>
+        <section id="skills" className={styles.skillsSec} ref={sectionRef}>
+            <div className={styles.container}>
+                <motion.div 
+                    className={styles.sectionTag}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
+                    02 / Kỹ năng
+                </motion.div>
+
+                <motion.h2 
+                    className={styles.heading}
+                    style={{ y: headingY, opacity: headingOpacity }}
+                >
+                    Expertise &<br/><em>Technologies</em>
+                </motion.h2>
+
+                <div className={styles.skillTable}>
+                    {data.map((sk, i) => (
+                        <motion.div 
+                            key={sk.name} 
+                            className={styles.skillRow}
+                            initial={{ opacity: 0, y: 30, x: -20 }}
+                            whileInView={{ opacity: 1, y: 0, x: 0 }}
+                            viewport={{ once: true, amount: 0.5 }}
+                            transition={{ 
+                                duration: 0.6, 
+                                delay: i * 0.08,
+                                ease: [0.16, 1, 0.3, 1]
+                            }}
+                        >
+                            <span className={styles.skillNum}>
+                                {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <h3 className={styles.skillName}>{sk.name}</h3>
+                            <span className={styles.skillDots} />
+                            <span className={styles.skillList}>{sk.list}</span>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
         </section>
     );
 }

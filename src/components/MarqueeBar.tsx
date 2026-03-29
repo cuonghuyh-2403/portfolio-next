@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from 'framer-motion';
 import styles from './MarqueeBar.module.css';
 
-// Helper wrap function
 function wrap(min: number, max: number, v: number) {
     const rangeSize = max - min;
     return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
@@ -14,17 +13,15 @@ function ParallaxText({ children, baseVelocity = 100, reverse = false, className
     const { scrollY } = useScroll();
     const scrollVelocity = useVelocity(scrollY);
     const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-    const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false });
+    const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 3], { clamp: false });
 
-    // Range depends on item width duplication
     const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
 
     const directionFactor = useRef<number>(1);
     
-    // Change initial direction
     if (reverse) directionFactor.current = -1;
 
-    useAnimationFrame((t, delta) => {
+    useAnimationFrame((_, delta) => {
         let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
         if (velocityFactor.get() < 0) {
@@ -49,25 +46,24 @@ function ParallaxText({ children, baseVelocity = 100, reverse = false, className
 const items = ['Graphic Design', 'UI/UX', 'Motion', 'Branding', 'Next.js', 'React', 'TypeScript', 'Figma', 'Illustration', 'Creative Direction'];
 
 export default function MarqueeBar() {
-    // Duplicate multiple times for smooth infinite scroll on a rotated huge wide banner
     const doubled = [...items, ...items, ...items, ...items, ...items];
     
     return (
         <div className={styles.container}>
-            <ParallaxText baseVelocity={3} className={styles.mq1} reverse={true}>
+            <ParallaxText baseVelocity={1} className={styles.mq1} reverse={true}>
                 {doubled.map((item, i) => (
                     <span key={i} className={styles.item}>
                         {item}
-                        <span className={styles.sep}>✖</span>
+                        <span className={styles.sep}>—</span>
                     </span>
                 ))}
             </ParallaxText>
             
-            <ParallaxText baseVelocity={5} className={styles.mq2}>
+            <ParallaxText baseVelocity={1.5} className={styles.mq2}>
                 {doubled.map((item, i) => (
                     <span key={i} className={styles.item}>
                         {item}
-                        <span className={styles.sep}>+</span>
+                        <span className={styles.sep}>·</span>
                     </span>
                 ))}
             </ParallaxText>

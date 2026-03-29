@@ -17,9 +17,9 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Chỉ hỗ trợ JPG, PNG, WebP, GIF' }, { status: 400 });
         }
 
-        const maxSize = 5 * 1024 * 1024; // 5MB
+        const maxSize = 10 * 1024 * 1024; // 10MB
         if (file.size > maxSize) {
-            return NextResponse.json({ error: 'File tối đa 5MB' }, { status: 400 });
+            return NextResponse.json({ error: 'File tối đa 10MB' }, { status: 400 });
         }
 
         // Upload to Supabase Storage bucket 'portfolio'

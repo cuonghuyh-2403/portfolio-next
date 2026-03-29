@@ -33,7 +33,13 @@ export async function getContent(): Promise<Content> {
         .single();
 
     if (error || !data) {
-        throw new Error(`Failed to fetch content from Supabase: ${error?.message}`);
+        console.warn(`Failed to fetch content from Supabase: ${error?.message}. Using empty fallback for build.`);
+        return {
+            hero: { eyebrow: '', titleLine1: '', titleLine2: '', subtitle: '', description: '', quote: '', stats: [] },
+            about: { bio: [], info: { location: '', education: '', email: '', status: '' }, experience: [] },
+            skills: [], projects: [],
+            contact: { heading: '', paragraph: '', socials: [] }
+        } as Content;
     }
 
     return data.data as Content;

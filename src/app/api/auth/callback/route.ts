@@ -14,10 +14,9 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${requestUrl.origin}/admin?error=No+code+provided`);
     }
 
-    // We must create a new client instance for this specific server-side request
-    // to handle the code exchange
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
         auth: {
+            flowType: 'pkce',
             persistSession: false,
         }
     });
@@ -32,14 +31,13 @@ export async function GET(request: Request) {
 
         const userEmail = data.user?.email;
 
-        // Verify that the user who logged in is exactly the ADMIN_EMAIL we defined in .env.local
+        // Verify that the user who logged in is exactly the ADMIN_EMAIL
         if (!userEmail || userEmail !== adminEmail) {
             console.warn(`Unauthorized login attempt by: ${userEmail}`);
             return NextResponse.redirect(`${requestUrl.origin}/admin?error=Unauthorized+Email`);
         }
 
         // Authentication successful and authorized!
-        // Mint our local session cookie to grant access to our dashboard
         const token = createSessionToken();
         const response = NextResponse.redirect(`${requestUrl.origin}/admin/dashboard`);
         
@@ -47,7 +45,7 @@ export async function GET(request: Request) {
             httpOnly: true,
             sameSite: 'lax',
             path: '/',
-            maxAge: 60 * 60 * 24, // 24h
+            maxAge: 60 * 60 * 24 * 30, // 30 days — matches auth.ts validation
         });
 
         return response;

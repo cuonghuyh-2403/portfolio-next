@@ -9,15 +9,8 @@ type Props = { data: Project[] };
 
 const CATEGORIES = ['Tất cả', 'Web Development', 'UI/UX Design', 'Mobile', 'Open Source'];
 
-const categoryColors: Record<string, string> = {
-    'Web Development': '#6366f1',
-    'UI/UX Design': '#ec4899',
-    'Mobile': '#f59e0b',
-    'Open Source': '#10b981',
-};
-
 const ExternalIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="14" height="14">
         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
         <polyline points="15 3 21 3 21 9" />
         <line x1="10" y1="14" x2="21" y2="3" />
@@ -35,13 +28,6 @@ export default function ProjectsPage({ data }: Props) {
 
     return (
         <div className={styles.page}>
-            {/* Background decoration */}
-            <div className={styles.bg}>
-                <div className={styles.bgBlob1} />
-                <div className={styles.bgBlob2} />
-                <div className={styles.grid} />
-            </div>
-
             <div className={styles.wrap}>
                 {/* Header */}
                 <header className={styles.header}>
@@ -59,12 +45,12 @@ export default function ProjectsPage({ data }: Props) {
                     {CATEGORIES.map((cat) => (
                         <button
                             key={cat}
-                            className={`${styles.pill} ${active === cat ? styles.pillActive : ''}`}
+                            className={`${styles.filterBtn} ${active === cat ? styles.filterActive : ''}`}
                             onClick={() => setActive(cat)}
                         >
                             {cat}
                             {cat !== 'Tất cả' && (
-                                <span className={styles.pillCount}>
+                                <span className={styles.filterCount}>
                                     {data.filter((p) => p.category === cat).length}
                                 </span>
                             )}
@@ -81,25 +67,14 @@ export default function ProjectsPage({ data }: Props) {
                 </div>
 
                 {/* Grid */}
-                <div className={styles.grid2}>
+                <div className={styles.grid}>
                     {filtered.map((p) => (
                         <article key={p.num} className={styles.card}>
-                            {/* Card top accent */}
-                            <div
-                                className={styles.cardAccent}
-                                style={{ background: categoryColors[p.category] ?? '#6366f1' }}
-                            />
-
                             <div className={styles.cardInner}>
                                 {/* Number + category */}
                                 <div className={styles.cardMeta}>
                                     <span className={styles.cardNum}>{p.num}</span>
-                                    <span
-                                        className={styles.cardCat}
-                                        style={{ color: categoryColors[p.category] ?? '#6366f1' }}
-                                    >
-                                        {p.category}
-                                    </span>
+                                    <span className={styles.cardCat}>{p.category}</span>
                                     <span className={styles.cardYear}>{p.year}</span>
                                 </div>
 

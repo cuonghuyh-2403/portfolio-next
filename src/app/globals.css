@@ -5,16 +5,17 @@
 }
 
 :root {
-  --bg:     #0a0a0a;
-  --bg2:    #111111;
-  --bg3:    #1a1a1a;
-  --ink:    #f0ede6;
-  --ink2:   #8a8580;
-  --ink3:   #4a4742;
-  --accent: #b8f53c;
-  --border: rgba(240, 237, 230, .07);
-  --card:   #111111;
-  --serif:  'Playfair Display', Georgia, serif;
+  --bg:     #F5F0EB;
+  --bg2:    #EDE8E1;
+  --bg3:    #E5DFD7;
+  --ink:    #1a1a1a;
+  --ink2:   #6b6b6b;
+  --ink3:   #999999;
+  --accent: #E63946;
+  --border: rgba(26, 26, 26, .1);
+  --card:   #FFFFFF;
+  --serif:  'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --display: 'Playfair Display', Georgia, serif;
   --sans:   'Inter', system-ui, sans-serif;
   --mono:   'Space Mono', monospace;
 }
@@ -23,6 +24,22 @@
 
 html {
   scroll-behavior: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbar on Desktop (PC/Laptop) */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 body {
@@ -33,17 +50,25 @@ body {
   overflow-x: hidden;
 }
 
-/* Grain texture overlay */
-body::after {
+/* On mobile/touch, show default cursor */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Editorial Red Vertical Line ── */
+body::before {
   content: '';
   position: fixed;
-  inset: 0;
-  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  left: 48px;
+  width: 1px;
+  background: var(--accent);
+  opacity: 0.3;
   z-index: 9998;
-  opacity: 0.032;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px 180px;
+  pointer-events: none;
 }
 
 /* ── Sections ── */
@@ -58,10 +83,6 @@ body::after {
 .wrap {
   max-width: 1100px;
   margin: 0 auto;
-}
-
-.sec-alt {
-  background: var(--bg2);
 }
 
 .tag {
@@ -85,17 +106,25 @@ body::after {
 }
 
 h2.sh {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(2.8rem, 5.5vw, 5rem);
   font-weight: 900;
   line-height: .92;
   letter-spacing: -2.5px;
   margin-bottom: 3rem;
+  color: var(--ink);
 }
 
 h2.sh em {
   font-style: italic;
   color: var(--accent);
+}
+
+/* ── Thin horizontal rules ── */
+.rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
 }
 
 /* ── Scroll-reveal ── */
@@ -118,6 +147,11 @@ h2.sh em {
   opacity: 0;
   transform: scale(0.88) translateY(20px);
   transition: opacity .75s cubic-bezier(0.16, 1, 0.3, 1), transform .75s cubic-bezier(0.16, 1, 0.3, 1);
+}/* Hide Next.js Dev Indicator */
+nextjs-portal, 
+[data-nextjs-toast], 
+#nextjs-static-indicator {
+  display: none !important;
 }
 
 .rv.on, .rv-left.on, .rv-right.on, .rv-scale.on {
@@ -137,5 +171,8 @@ h2.sh em {
 @media (max-width: 900px) {
   .sec {
     padding: 4rem 2rem;
+  }
+  body::before {
+    left: 16px;
   }
 }

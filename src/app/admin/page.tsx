@@ -1,48 +1,32 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Head from 'next/head';
 
 export default function AdminLoginPage() {
+    return (
+        <Suspense fallback={<div style={{ minHeight: '100vh', background: '#000' }} />}>
+            <AdminLoginContent />
+        </Suspense>
+    );
+}
+
+function AdminLoginContent() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         setMounted(true);
-        if (window.location.hash.includes('access_token')) {
-            setLoading(true);
-            supabase.auth.getSession().then(({ data, error }) => {
-                if (error || !data.session) {
-                    setError('Phiên đăng nhập không hợp lệ hoặc đã hết hạn.');
-                    setLoading(false);
-                    return;
-                }
-                
-                fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        email: data.session.user.email, 
-                        access_token: data.session.access_token 
-                    })
-                }).then(async (res) => {
-                    if (res.ok) {
-                        router.push('/admin/dashboard');
-                    } else {
-                        const errData = await res.json();
-                        setError(errData.error || 'Authentication failed');
-                        setLoading(false);
-                    }
-                }).catch(() => {
-                    setError('Lỗi kết nối đên máy chủ.');
-                    setLoading(false);
-                });
-            });
+        // Show error from callback redirect if any
+        const errorParam = searchParams.get('error');
+        if (errorParam) {
+            setError(decodeURIComponent(errorParam.replace(/\+/g, ' ')));
         }
-    }, [router]);
+    }, [searchParams]);
 
     const handleGoogleLogin = async () => {
         setError('');
@@ -51,12 +35,13 @@ export default function AdminLoginPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/admin`,
+                    redirectTo: `${window.location.origin}/api/auth/callback`,
                 },
             });
             if (error) throw error;
-        } catch (err: any) {
-            setError(err.message || 'Lỗi kết nối Google');
+        } catch (err) {
+            const msg = (err as any)?.message || 'Lỗi kết nối Google';
+            setError(msg);
             setLoading(false);
         }
     };

@@ -7,6 +7,10 @@ export default function Cursor() {
     const [label, setLabel] = useState('');
 
     useEffect(() => {
+        // Disable custom cursor on touch devices (mobile/tablet)
+        const isTouch = !window.matchMedia('(pointer: fine)').matches;
+        if (isTouch) return;
+
         const ring = ringRef.current;
         const dot = dotRef.current;
         if (!ring || !dot) return;
@@ -24,10 +28,8 @@ export default function Cursor() {
 
         const render = () => {
             if (!isActive) return;
-            // Ring: slower, smoother
             ringX += (mouseX - ringX) * 0.12;
             ringY += (mouseY - ringY) * 0.12;
-            // Dot: faster, snappier
             dotX += (mouseX - dotX) * 0.5;
             dotY += (mouseY - dotY) * 0.5;
 
@@ -67,11 +69,9 @@ export default function Cursor() {
 
     return (
         <>
-            {/* Trailing ring */}
             <div ref={ringRef} className="premium-cursor-ring">
                 {label && <span className="cursor-label">{label}</span>}
             </div>
-            {/* Fast dot */}
             <div ref={dotRef} className="premium-cursor-dot" />
             <style dangerouslySetInnerHTML={{ __html: `
                 *, *::before, *::after { cursor: none !important; }
@@ -81,7 +81,7 @@ export default function Cursor() {
                     top: 0; left: 0;
                     width: 36px; height: 36px;
                     border-radius: 50%;
-                    border: 1.5px solid rgba(255,255,255,0.25);
+                    border: 1.5px solid rgba(26,26,26,0.2);
                     pointer-events: none;
                     z-index: 9999;
                     will-change: transform;
@@ -98,15 +98,15 @@ export default function Cursor() {
 
                 .premium-cursor-ring.cursor-hover {
                     width: 60px; height: 60px;
-                    background: rgba(184,245,60,0.1);
-                    border-color: rgba(184,245,60,0.7);
+                    background: rgba(230,57,70,0.08);
+                    border-color: rgba(230,57,70,0.5);
                     mix-blend-mode: normal;
                 }
 
                 .premium-cursor-ring.cursor-expand {
                     width: 80px; height: 80px;
-                    background: var(--accent, #b8f53c);
-                    border-color: var(--accent, #b8f53c);
+                    background: var(--accent, #E63946);
+                    border-color: var(--accent, #E63946);
                     mix-blend-mode: normal;
                 }
 
@@ -114,7 +114,7 @@ export default function Cursor() {
                     font-family: var(--mono, monospace);
                     font-size: 0.52rem;
                     font-weight: 700;
-                    color: var(--bg, #0a0a0a);
+                    color: #F5F0EB;
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
                     user-select: none;
@@ -125,7 +125,7 @@ export default function Cursor() {
                     top: 0; left: 0;
                     width: 5px; height: 5px;
                     border-radius: 50%;
-                    background: var(--accent, #b8f53c);
+                    background: var(--accent, #E63946);
                     pointer-events: none;
                     z-index: 10000;
                     will-change: transform;
