@@ -21,12 +21,50 @@ function AdminLoginContent() {
 
     useEffect(() => {
         setMounted(true);
+
         // Show error from callback redirect if any
         const errorParam = searchParams.get('error');
         if (errorParam) {
             setError(decodeURIComponent(errorParam.replace(/\+/g, ' ')));
+            return;
         }
-    }, [searchParams]);
+
+        // PKCE flow: Supabase redirects back with ?code=... 
+        // The browser exchanges the code using the code_verifier stored in localStorage
+        const code = searchParams.get('code');
+        if (code) {
+            setLoading(true);
+            supabase.auth.exchangeCodeForSession(code).then(({ data, error: exchangeError }) => {
+                if (exchangeError || !data.session) {
+                    setError('Phiên đăng nhập không hợp lệ hoặc đã hết hạn.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Successfully exchanged code for session
+                // Now call our server API to set the admin session cookie
+                fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: data.session.user.email,
+                        access_token: data.session.access_token,
+                    }),
+                }).then(async (res) => {
+                    if (res.ok) {
+                        router.push('/admin/dashboard');
+                    } else {
+                        const errData = await res.json();
+                        setError(errData.error || 'Authentication failed');
+                        setLoading(false);
+                    }
+                }).catch(() => {
+                    setError('Lỗi kết nối đến máy chủ.');
+                    setLoading(false);
+                });
+            });
+        }
+    }, [searchParams, router]);
 
     const handleGoogleLogin = async () => {
         setError('');
@@ -35,7 +73,7 @@ function AdminLoginContent() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/api/auth/callback`,
+                    redirectTo: `${window.location.origin}/admin`,
                 },
             });
             if (error) throw error;
