@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
     const logout = async () => {
         await fetch('/api/auth/logout', { method: 'POST' });
-        router.push('/admin');
+        window.location.href = '/admin';
     };
 
     if (!content) return <div style={{ color: '#7a7e96', padding: '4rem', textAlign: 'center', fontFamily: 'Inter, sans-serif' }}>Đang tải...</div>;
